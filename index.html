@@ -11,7 +11,7 @@
     <script type="text/javascript" src="libs/OrbitControls.js"></script>
 
     <!-- vr -->
-    <script type="text/javascript" src="libs/WebVR.js"></script>
+    <!--script type="text/javascript" src="libs/WebVR.js"></script-->
     <script type="text/javascript" src="libs/VREffect.js"></script>
     <script type="text/javascript" src="libs/CardboardEffect.js"></script>
     <script type="text/javascript" src="libs/VRControls.js"></script>
@@ -33,9 +33,9 @@
 
 <!-- Javascript code that runs our Three.js examples -->
 <script type="text/javascript">
-    if (WEBVR.isLatestAvailable() === false) {
-        document.body.appendChild(WEBVR.getMessage());
-    }
+    //if (WEBVR.isLatestAvailable() === false) {
+    //    document.body.appendChild(WEBVR.getMessage());
+    //}
 
     // once everything is loaded, we run our Three.js stuff.
     function init() {
@@ -82,9 +82,9 @@
 		var controls = new THREE.VRControls(camera);
 		var effect = new THREE.VREffect(webGLRenderer);
 effect = new THREE.CardboardEffect(webGLRenderer);
-        if (WEBVR.isAvailable() === true) {
-            document.body.appendChild(WEBVR.getButton(effect));
-        }
+        //if (WEBVR.isAvailable() === true) {
+        //    document.body.appendChild(WEBVR.getButton(effect));
+        //}
 //        var controls = new THREE.OrbitControls(camera);
 //        controls.autoRotate = false;
         var clock = new THREE.Clock();
