@@ -187,7 +187,8 @@ function onWindowResize() {
 
 
             // create a multimaterial
-            var mesh = THREE.SceneUtils.createMultiMaterialObject(geom, [planetMaterial]);
+            //var mesh = THREE.SceneUtils.createMultiMaterialObject(geom, [planetMaterial]);
+            var mesh = new THREE.Mesh(geom, planetMaterial);
 
             return mesh;
         }
