@@ -108,6 +108,12 @@ effect = new THREE.CardboardEffect(webGLRenderer);
 webGLRenderer.domElement.addEventListener('click', function() {
   webGLRenderer.domElement.webkitRequestFullScreen();
 });
+window.addEventListener('resize', onWindowResize, false);
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    effect.setSize(window.innerWidth, window.innerHeight);
+}
 
         // call the render function
         var step = 0;
