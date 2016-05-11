@@ -219,15 +219,14 @@ function onWindowResize() {
 
         function render() {
 
-            if (moon.material) {
-                raycaster.setFromCamera({x:0, y:0}, camera);
-                var intersects = raycaster.intersectObjects([moon]);
-                if (intersects.length > 0) {
-                    moon.material.shininess = 100;
-                }
-                else {
-                    moon.material.shininess = 0;
-                }
+            raycaster.setFromCamera({x:0, y:0}, camera);
+            var intersects = raycaster.intersectObjects([moon]);
+            if (intersects.length > 0) {
+                if (moon.material) moon.material.shininess = 100;
+            }
+            else {
+console.log(moon.material);
+                if (moon.material) moon.material.shininess = 0;
             }
 
             controls.update();
