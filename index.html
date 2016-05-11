@@ -105,6 +105,7 @@ effect = new THREE.CardboardEffect(webGLRenderer);
 
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
+webGLRenderer.domElement.webkitRequestFullScreen();
 
         // call the render function
         var step = 0;
