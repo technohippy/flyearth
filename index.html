@@ -185,9 +185,6 @@ function onWindowResize() {
             planetMaterial.specular = new THREE.Color(0x444400);
             planetMaterial.shininess = 0;
 
-
-            // create a multimaterial
-            //var mesh = THREE.SceneUtils.createMultiMaterialObject(geom, [planetMaterial]);
             var mesh = new THREE.Mesh(geom, planetMaterial);
 
             return mesh;
@@ -223,11 +220,10 @@ function onWindowResize() {
             raycaster.setFromCamera({x:0, y:0}, camera);
             var intersects = raycaster.intersectObjects([moon]);
             if (intersects.length > 0) {
-                if (moon.material) moon.material.shininess = 100;
+                moon.material.emissive.setHex( 0xff0000 );
             }
             else {
-console.log(moon.material);
-                if (moon.material) moon.material.shininess = 0;
+                moon.material.emissive.setHex( 0xffff00 );
             }
 
             controls.update();
