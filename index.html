@@ -106,7 +106,22 @@ effect = new THREE.CardboardEffect(webGLRenderer);
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
 webGLRenderer.domElement.addEventListener('click', function() {
-  webGLRenderer.domElement.webkitRequestFullScreen();
+  if (document.mozFullScreen || document.webkitIsFullScreen) {
+    if (document.webkitCancelFullScreen) {
+      document.webkitCancelFullScreen();
+    }
+    else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    }
+  }
+  else {
+    if (webGLRenderer.domElement.mozRequestFullScreen) {
+      webGLRenderer.domElement.mozRequestFullScreen();
+    }
+    else if (webGLRenderer.domElement.webkitRequestFullScreen) {
+      webGLRenderer.domElement.webkitRequestFullScreen();
+    }
+  }
 });
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
