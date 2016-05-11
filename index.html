@@ -220,10 +220,10 @@ function onWindowResize() {
             raycaster.setFromCamera({x:0, y:0}, camera);
             var intersects = raycaster.intersectObjects([moon]);
             if (intersects.length > 0) {
-                moon.material.emissive.setHex( 0xff0000 );
+                moon.material.emissive.setHex(0xffcccc);
             }
             else {
-                moon.material.emissive.setHex( 0x000000 );
+                moon.material.emissive.setHex(0xcccccc);
             }
 
             controls.update();
