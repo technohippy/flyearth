@@ -82,6 +82,7 @@
 		var controls = new THREE.VRControls(camera);
 		var effect = new THREE.VREffect(webGLRenderer);
 effect = new THREE.CardboardEffect(webGLRenderer);
+effect.setFullScreen(true);
         //if (WEBVR.isAvailable() === true) {
         //    document.body.appendChild(WEBVR.getButton(effect));
         //}
@@ -196,7 +197,8 @@ effect = new THREE.CardboardEffect(webGLRenderer);
             stats.update();
 
             var delta = clock.getDelta();
-            controls.update(delta);
+            //controls.update(delta);
+            controls.update();
 
             earth.rotation.x -= 0.001;
             earth.rotation.y += Math.sin(earth.rotation.x) / 500;
