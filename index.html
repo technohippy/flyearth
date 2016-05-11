@@ -81,8 +81,8 @@
         // vr
 		var controls = new THREE.VRControls(camera);
 		var effect = new THREE.VREffect(webGLRenderer);
+controls = new THREE.DeviceOrientationControls(camera);
 effect = new THREE.CardboardEffect(webGLRenderer);
-effect.setFullScreen(true);
         //if (WEBVR.isAvailable() === true) {
         //    document.body.appendChild(WEBVR.getButton(effect));
         //}
