@@ -125,26 +125,12 @@ effect = new THREE.CardboardEffect(webGLRenderer);
                 }
             }
             else {
-/*
-                var targetDebri;
-                for (var i = 0; i < debris.length; i++) {
-                    var debri = debris[i];
-                    if (1 < debri.scale.x) {
-                        targetDebri = debri;
-                        break;
-                    }
-                }
-*/
                 if (targetDebri) {
                     debris.splice(debris.indexOf(targetDebri), 1);
                     earthAndDebris.splice(earthAndDebris.indexOf(targetDebri), 1);
-                    scene.remove(targetDebri);
+                    earth.remove(targetDebri);
                     targetDebri.geometry.dispose();
                     targetDebri.material.dispose();
-                    /*
-                    targetDebri.material.transparent = true;
-                    targetDebri.material.opacity = 0;
-                    */
                     targetDebri = null;
                 }
             }
@@ -306,13 +292,6 @@ baseSize = 8;
                         break;
                     }
                 }
-                /*
-                var debri = intersects[0].object;
-                if (debri !== earth) {
-                    debri.material.emissive.setHex(0xff3333);
-                    debri.scale.set(2, 2, 2);
-                }
-                */
             }
 
             controls.update();
