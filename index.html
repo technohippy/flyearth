@@ -74,6 +74,13 @@
         earth.add(createStarPoints(500, 3, pos, rad));
         earth.add(createStarPoints(2000, 2, pos, rad));
 
+        var debris = [];
+        for (var i = 0; i < 100; i++) {
+          var debri = createDebri(10.2, earth.position);
+          earth.add(debri);
+          debris.push(debri);
+        }
+
         // position and point the camera to the center of the scene
         camera.position.x = 8;
 
@@ -149,6 +156,8 @@ function onWindowResize() {
             planetMaterial.normalMap = normalTexture;
             planetMaterial.normalScale = new THREE.Vector2(5, 5);
             planetMaterial.map = planetTexture;
+//planetMaterial.transparent = true;
+//planetMaterial.opacity = 0.5;
 
 
             // create a multimaterial
@@ -215,6 +224,30 @@ function onWindowResize() {
             return cloud;
         }
 
+        function createDebri(limitRadius, center) {
+            var geom = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+            var material = new THREE.MeshPhongMaterial();
+            material.color = new THREE.Color(Math.random() * 0xffffff);
+            material.specular = new THREE.Color(0x4444aa);
+            material.shininess = 100;
+            var mesh = new THREE.Mesh(geom, material);
+            var theta = Math.random() * 2 * Math.PI;
+            var phi = Math.random() * 2 * Math.PI;
+            var r = limitRadius * 2 + Math.random() / 100;
+            mesh.position.set(
+                center.x + r * Math.sin(theta) * Math.cos(phi),
+                center.y + r * Math.sin(theta) * Math.sin(phi),
+                center.z + r * Math.cos(theta)
+            );
+            mesh.rotation.x = Math.random() * 2 * Math.PI;
+            mesh.rotation.y = Math.random() * 2 * Math.PI;
+            mesh.rotation.z = Math.random() * 2 * Math.PI;
+            mesh.drotx = (Math.random() - 0.5) / 10;
+            mesh.droty = (Math.random() - 0.5) / 10;
+            mesh.drotz = (Math.random() - 0.5) / 10;
+            return mesh;
+        }
+
         function render() {
 
             raycaster.setFromCamera({x:0, y:0}, camera);
@@ -229,6 +262,11 @@ function onWindowResize() {
             controls.update();
 
             earth.rotation.z -= 0.001;
+            debris.forEach(function(debri) {
+              debri.rotation.x += debri.drotx;
+              debri.rotation.y += debri.droty;
+              debri.rotation.z += debri.drotz;
+            });
 
             // render using requestAnimationFrame
             requestAnimationFrame(render);
