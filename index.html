@@ -274,22 +274,27 @@ effect = new THREE.CardboardEffect(webGLRenderer);
         function render() {
 
             debris.forEach(function(debri) {
-                debri.material.emissive.setHex(0x333333);
-                debri.scale.set(1, 1, 1);
                 debri.rotation.x += debri.drotx;
                 debri.rotation.y += debri.droty;
                 debri.rotation.z += debri.drotz;
             });
             raycaster.setFromCamera({x:0, y:0}, camera);
             var intersects = raycaster.intersectObjects(earthAndDebris);
-            if (intersects.length > 0) {
+            if (intersects.length === 0) {
+                targetDebri.material.emissive.setHex(0x333333);
+                targetDebri.scale.set(1, 1, 1);
+                targetDebri = null;
+            }
+            else {
                 for (var i = 0; i < intersects.length; i++) {
                     var debri = intersects[i].object;
                     if (debri === earth) {
                         console.log(debri === earth);
                         break;
                     }
-                    if (debri !== targetDebri) {
+                    if (targetDebri !== debri) {
+                        targetDebri.material.emissive.setHex(0x333333);
+                        targetDebri.scale.set(1, 1, 1);
                         targetDebri = debri;
                         debri.material.emissive.setHex(0xff3333);
                         debri.scale.set(2, 2, 2);
