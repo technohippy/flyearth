@@ -114,14 +114,28 @@ effect = new THREE.CardboardEffect(webGLRenderer);
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
 webGLRenderer.domElement.addEventListener('click', function() {
-  if (document.mozFullScreen || !document.webkitIsFullScreen) {
-    if (webGLRenderer.domElement.mozRequestFullScreen) {
-      webGLRenderer.domElement.mozRequestFullScreen();
+    if (document.mozFullScreen || !document.webkitIsFullScreen) {
+        if (webGLRenderer.domElement.mozRequestFullScreen) {
+            webGLRenderer.domElement.mozRequestFullScreen();
+        }
+        else if (webGLRenderer.domElement.webkitRequestFullScreen) {
+            webGLRenderer.domElement.webkitRequestFullScreen();
+        }
     }
-    else if (webGLRenderer.domElement.webkitRequestFullScreen) {
-      webGLRenderer.domElement.webkitRequestFullScreen();
+    else {
+        var targetDebri;
+        debris.forEach(function(debri) {
+            if (1 < debri.scale.x) {
+                targetDebri = debri;
+            }
+        });
+        if (targetDebri) {
+            debris.splice(debris.indexOf(targetDebri), 1);
+            scene.remove(targetDebri);
+            targetDebri.geometry.dispose();
+            targetDebri.material.dispose();
+        }
     }
-  }
 });
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
