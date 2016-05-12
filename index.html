@@ -75,7 +75,7 @@
         earth.add(createStarPoints(2000, 2, pos, rad));
 
         var debris = [];
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 30; i++) {
           var debri = createDebri(10.2, earth.position);
           earth.add(debri);
           debris.push(debri);
@@ -252,7 +252,6 @@ function onWindowResize() {
         function render() {
 
             raycaster.setFromCamera({x:0, y:0}, camera);
-            //var intersects = raycaster.intersectObjects([moon]);
             var intersects = raycaster.intersectObjects(debris);
             if (intersects.length > 0) {
                 moon.material.emissive.setHex(0xff3333);
