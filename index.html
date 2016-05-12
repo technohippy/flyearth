@@ -133,7 +133,7 @@ webGLRenderer.domElement.addEventListener('click', function() {
         }
         if (targetDebri) {
             debris.splice(debris.indexOf(targetDebri), 1);
-            earthAndDebris.splice(debris.indexOf(targetDebri), 1);
+            earthAndDebris.splice(earthAndDebris.indexOf(targetDebri), 1);
             scene.remove(targetDebri);
             targetDebri.geometry.dispose();
             targetDebri.material.dispose();
