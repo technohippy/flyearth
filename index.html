@@ -133,9 +133,10 @@ webGLRenderer.domElement.addEventListener('click', function() {
         }
         if (targetDebri) {
             debris.splice(debris.indexOf(targetDebri), 1);
+            earthAndDebris.splice(debris.indexOf(targetDebri), 1);
             scene.remove(targetDebri);
-            //targetDebri.geometry.dispose();
-            //targetDebri.material.dispose();
+            targetDebri.geometry.dispose();
+            targetDebri.material.dispose();
             /*
             targetDebri.material.transparent = true;
             targetDebri.material.opacity = 0;
@@ -143,7 +144,7 @@ webGLRenderer.domElement.addEventListener('click', function() {
             targetDebri = null;
         }
     }
-});
+}.bind(this));
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
