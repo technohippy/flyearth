@@ -100,7 +100,6 @@ effect = new THREE.CardboardEffect(webGLRenderer);
 //        controls.autoRotate = false;
 
         var ambi = new THREE.AmbientLight(0x181818);
-ambi = new THREE.AmbientLight(0x888888);
         scene.add(ambi);
 
         var spotLight = new THREE.DirectionalLight(0xffffff);
@@ -115,15 +114,7 @@ ambi = new THREE.AmbientLight(0x888888);
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
 webGLRenderer.domElement.addEventListener('click', function() {
-  if (document.mozFullScreen || document.webkitIsFullScreen) {
-    if (document.webkitCancelFullScreen) {
-      document.webkitCancelFullScreen();
-    }
-    else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    }
-  }
-  else {
+  if (document.mozFullScreen || !document.webkitIsFullScreen) {
     if (webGLRenderer.domElement.mozRequestFullScreen) {
       webGLRenderer.domElement.mozRequestFullScreen();
     }
@@ -159,9 +150,6 @@ function onWindowResize() {
             planetMaterial.normalMap = normalTexture;
             planetMaterial.normalScale = new THREE.Vector2(5, 5);
             planetMaterial.map = planetTexture;
-planetMaterial.transparent = true;
-planetMaterial.opacity = 0.5;
-
 
             // create a multimaterial
             var mesh = THREE.SceneUtils.createMultiMaterialObject(geom, [planetMaterial]);
