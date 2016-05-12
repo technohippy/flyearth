@@ -243,6 +243,7 @@ effect = new THREE.CardboardEffect(webGLRenderer);
 
         function createDebri(limitRadius, center) {
             var baseSize = 0.8;
+baseSize = 8;
             var geom = new THREE.BoxGeometry(
                 baseSize + Math.random() / 2,
                 baseSize + Math.random() / 2,
@@ -284,8 +285,8 @@ effect = new THREE.CardboardEffect(webGLRenderer);
                 if (targetDebri) {
                     targetDebri.material.emissive.setHex(0x333333);
                     targetDebri.scale.set(1, 1, 1);
-                    targetDebri = null;
                 }
+                targetDebri = null;
             }
             else {
                 for (var i = 0; i < intersects.length; i++) {
@@ -295,8 +296,10 @@ effect = new THREE.CardboardEffect(webGLRenderer);
                         break;
                     }
                     if (targetDebri !== debri) {
-                        targetDebri.material.emissive.setHex(0x333333);
-                        targetDebri.scale.set(1, 1, 1);
+                        if (targetDebri) {
+                            targetDebri.material.emissive.setHex(0x333333);
+                            targetDebri.scale.set(1, 1, 1);
+                        }
                         targetDebri = debri;
                         debri.material.emissive.setHex(0xff3333);
                         debri.scale.set(2, 2, 2);
