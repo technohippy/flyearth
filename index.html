@@ -253,14 +253,14 @@ function onWindowResize() {
 
             debris.forEach(function(debri) {
                 debri.material.emissive.setHex(0x333333);
-                debri.geometry.scale.set(1, 1, 1);
+                debri.scale.set(1, 1, 1);
             });
             raycaster.setFromCamera({x:0, y:0}, camera);
             var intersects = raycaster.intersectObjects(debris);
             if (intersects.length > 0) {
                 var debri = intersects[0];
                 debri.material.emissive.setHex(0xff3333);
-                debri.geometry.scale.set(2, 2, 2);
+                debri.scale.set(2, 2, 2);
             }
 
             controls.update();
