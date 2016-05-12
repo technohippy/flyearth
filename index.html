@@ -83,6 +83,8 @@
           earthAndDebris.push(debri);
         }
 
+        var targetDebri;
+
         // position and point the camera to the center of the scene
         camera.position.x = 8;
 
@@ -92,7 +94,7 @@
 		var controls = new THREE.VRControls(camera);
 		var effect = new THREE.VREffect(webGLRenderer);
 controls = new THREE.DeviceOrientationControls(camera);
-//effect = new THREE.CardboardEffect(webGLRenderer);
+effect = new THREE.CardboardEffect(webGLRenderer);
         //if (WEBVR.isAvailable() === true) {
         //    document.body.appendChild(WEBVR.getButton(effect));
         //}
@@ -113,44 +115,46 @@ controls = new THREE.DeviceOrientationControls(camera);
 
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
-webGLRenderer.domElement.addEventListener('click', function() {
-    if (document.mozFullScreen || !document.webkitIsFullScreen) {
-        if (webGLRenderer.domElement.mozRequestFullScreen) {
-            webGLRenderer.domElement.mozRequestFullScreen();
-        }
-        else if (webGLRenderer.domElement.webkitRequestFullScreen) {
-            webGLRenderer.domElement.webkitRequestFullScreen();
-        }
-    }
-    else {
-        var targetDebri;
-        for (var i = 0; i < debris.length; i++) {
-            var debri = debris[i];
-            if (1 < debri.scale.x) {
-                targetDebri = debri;
-                break;
+        webGLRenderer.domElement.addEventListener('click', function() {
+            if (document.mozFullScreen || !document.webkitIsFullScreen) {
+                if (webGLRenderer.domElement.mozRequestFullScreen) {
+                    webGLRenderer.domElement.mozRequestFullScreen();
+                }
+                else if (webGLRenderer.domElement.webkitRequestFullScreen) {
+                    webGLRenderer.domElement.webkitRequestFullScreen();
+                }
             }
+            else {
+/*
+                var targetDebri;
+                for (var i = 0; i < debris.length; i++) {
+                    var debri = debris[i];
+                    if (1 < debri.scale.x) {
+                        targetDebri = debri;
+                        break;
+                    }
+                }
+*/
+                if (targetDebri) {
+                    debris.splice(debris.indexOf(targetDebri), 1);
+                    earthAndDebris.splice(earthAndDebris.indexOf(targetDebri), 1);
+                    scene.remove(targetDebri);
+                    targetDebri.geometry.dispose();
+                    targetDebri.material.dispose();
+                    /*
+                    targetDebri.material.transparent = true;
+                    targetDebri.material.opacity = 0;
+                    */
+                    targetDebri = null;
+                }
+            }
+        }.bind(this));
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            effect.setSize(window.innerWidth, window.innerHeight);
         }
-        if (targetDebri) {
-            debris.splice(debris.indexOf(targetDebri), 1);
-            earthAndDebris.splice(earthAndDebris.indexOf(targetDebri), 1);
-            scene.remove(targetDebri);
-            targetDebri.geometry.dispose();
-            targetDebri.material.dispose();
-            /*
-            targetDebri.material.transparent = true;
-            targetDebri.material.opacity = 0;
-            */
-            targetDebri = null;
-        }
-    }
-}.bind(this));
-window.addEventListener('resize', onWindowResize, false);
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    effect.setSize(window.innerWidth, window.innerHeight);
-}
 
         // call the render function
         var step = 0;
@@ -285,7 +289,8 @@ function onWindowResize() {
                         console.log(debri === earth);
                         break;
                     }
-                    if (debri.scale.x === 1 && debri.material.opacity !== 0) {
+                    if (debri !== targetDebri) {
+                        targetDebri = debri;
                         debri.material.emissive.setHex(0xff3333);
                         debri.scale.set(2, 2, 2);
                         break;
