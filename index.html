@@ -133,11 +133,13 @@ webGLRenderer.domElement.addEventListener('click', function() {
         }
         if (targetDebri) {
             debris.splice(debris.indexOf(targetDebri), 1);
-            //scene.remove(targetDebri);
-            //targetDebri.geometry.dispose();
-            //targetDebri.material.dispose();
+            scene.remove(targetDebri);
+            targetDebri.geometry.dispose();
+            targetDebri.material.dispose();
+            /*
             targetDebri.material.transparent = true;
             targetDebri.material.opacity = 0;
+            */
             targetDebri = null;
         }
     }
@@ -249,7 +251,6 @@ function onWindowResize() {
             var mesh = new THREE.Mesh(geom, material);
             var theta = Math.random() * 2 * Math.PI;
             var phi = Math.random() * 2 * Math.PI;
-            //var r = limitRadius * 2 + Math.random() / 100;
             var r = limitRadius * 2 + Math.random() / 100;
             mesh.position.set(
                 center.x + r * Math.sin(theta) * Math.cos(phi),
