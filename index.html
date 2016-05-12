@@ -134,8 +134,8 @@ webGLRenderer.domElement.addEventListener('click', function() {
         if (targetDebri) {
             debris.splice(debris.indexOf(targetDebri), 1);
             scene.remove(targetDebri);
-            targetDebri.geometry.dispose();
-            targetDebri.material.dispose();
+            //targetDebri.geometry.dispose();
+            //targetDebri.material.dispose();
             /*
             targetDebri.material.transparent = true;
             targetDebri.material.opacity = 0;
