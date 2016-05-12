@@ -228,7 +228,11 @@ planetMaterial.opacity = 0.5;
         }
 
         function createDebri(limitRadius, center) {
-            var geom = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+            var geom = new THREE.BoxGeometry(
+                0.8 + Math.random() / 2,
+                0.8 + Math.random() / 2,
+                0.8 + Math.random() / 2
+            );
             var material = new THREE.MeshPhongMaterial();
             material.color = new THREE.Color(Math.random() * 0xffffff);
             material.emissive = new THREE.Color(0x333333);
