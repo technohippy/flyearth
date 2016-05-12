@@ -74,11 +74,13 @@
         earth.add(createStarPoints(500, 3, pos, rad));
         earth.add(createStarPoints(2000, 2, pos, rad));
 
+        var earthAndDebris = [earth];
         var debris = [];
         for (var i = 0; i < 30; i++) {
           var debri = createDebri(10.2, earth.position);
           earth.add(debri);
           debris.push(debri);
+          earthAndDebris.push(debri);
         }
 
         // position and point the camera to the center of the scene
@@ -98,6 +100,7 @@ effect = new THREE.CardboardEffect(webGLRenderer);
 //        controls.autoRotate = false;
 
         var ambi = new THREE.AmbientLight(0x181818);
+ambi = new THREE.AmbientLight(0x888888);
         scene.add(ambi);
 
         var spotLight = new THREE.DirectionalLight(0xffffff);
@@ -156,8 +159,8 @@ function onWindowResize() {
             planetMaterial.normalMap = normalTexture;
             planetMaterial.normalScale = new THREE.Vector2(5, 5);
             planetMaterial.map = planetTexture;
-//planetMaterial.transparent = true;
-//planetMaterial.opacity = 0.5;
+planetMaterial.transparent = true;
+planetMaterial.opacity = 0.5;
 
 
             // create a multimaterial
@@ -234,11 +237,19 @@ function onWindowResize() {
             var mesh = new THREE.Mesh(geom, material);
             var theta = Math.random() * 2 * Math.PI;
             var phi = Math.random() * 2 * Math.PI;
-            var r = limitRadius * 2 + Math.random() / 100;
+            //var r = limitRadius * 2 + Math.random() / 100;
+            var r = limitRadius + Math.random() / 100;
+            /*
             mesh.position.set(
                 center.x + r * Math.sin(theta) * Math.cos(phi),
                 center.y + r * Math.sin(theta) * Math.sin(phi),
                 center.z + r * Math.cos(theta)
+            );
+            */
+            mesh.position.set(
+                center.x,
+                center.y,
+                center.z
             );
             mesh.rotation.x = Math.random() * 2 * Math.PI;
             mesh.rotation.y = Math.random() * 2 * Math.PI;
@@ -254,23 +265,23 @@ function onWindowResize() {
             debris.forEach(function(debri) {
                 debri.material.emissive.setHex(0x333333);
                 debri.scale.set(1, 1, 1);
+                debri.rotation.x += debri.drotx;
+                debri.rotation.y += debri.droty;
+                debri.rotation.z += debri.drotz;
             });
             raycaster.setFromCamera({x:0, y:0}, camera);
-            var intersects = raycaster.intersectObjects(debris);
+            var intersects = raycaster.intersectObjects(earthAndDebris);
             if (intersects.length > 0) {
-                var debri = intersects[0];
-                debri.material.emissive.setHex(0xff3333);
-                debri.scale.set(2, 2, 2);
+                var debri = intersects[0].object;
+                if (debri !== earth) {
+                    debri.material.emissive.setHex(0xff3333);
+                    debri.scale.set(2, 2, 2);
+                }
             }
 
             controls.update();
 
             earth.rotation.z -= 0.001;
-            debris.forEach(function(debri) {
-              debri.rotation.x += debri.drotx;
-              debri.rotation.y += debri.droty;
-              debri.rotation.z += debri.drotz;
-            });
 
             // render using requestAnimationFrame
             requestAnimationFrame(render);
