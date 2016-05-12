@@ -123,17 +123,15 @@ webGLRenderer.domElement.addEventListener('click', function() {
         }
     }
     else {
-        var targetDebri;
-        debris.forEach(function(debri) {
+        for (var i = 0; i < debris.length; i++) {
+            var debri = debris[i];
             if (1 < debri.scale.x) {
-                targetDebri = debri;
+                debris.splice(debris.indexOf(debri), 1);
+                scene.remove(debri);
+                debri.geometry.dispose();
+                debri.material.dispose();
+                break;
             }
-        });
-        if (targetDebri) {
-            debris.splice(debris.indexOf(targetDebri), 1);
-            scene.remove(targetDebri);
-            targetDebri.geometry.dispose();
-            targetDebri.material.dispose();
         }
     }
 });
