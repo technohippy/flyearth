@@ -281,9 +281,11 @@ effect = new THREE.CardboardEffect(webGLRenderer);
             raycaster.setFromCamera({x:0, y:0}, camera);
             var intersects = raycaster.intersectObjects(earthAndDebris);
             if (intersects.length === 0) {
-                targetDebri.material.emissive.setHex(0x333333);
-                targetDebri.scale.set(1, 1, 1);
-                targetDebri = null;
+                if (targetDebri) {
+                    targetDebri.material.emissive.setHex(0x333333);
+                    targetDebri.scale.set(1, 1, 1);
+                    targetDebri = null;
+                }
             }
             else {
                 for (var i = 0; i < intersects.length; i++) {
