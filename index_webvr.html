@@ -123,7 +123,6 @@
 
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
-        /*
         webGLRenderer.domElement.addEventListener('click', function() {
             if (!document.mozFullScreen && !document.webkitIsFullScreen) {
                 var canvas = webGLRenderer.domElement;
@@ -134,7 +133,6 @@
                 removeSelectedDebri();
             }
         }.bind(this));
-        */
         window.addEventListener('resize', onWindowResize, false);
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
