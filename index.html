@@ -8,7 +8,6 @@
 
     <script type="text/javascript" src="libs/stats.js"></script>
     <script type="text/javascript" src="libs/dat.gui.js"></script>
-    <script type="text/javascript" src="libs/OrbitControls.js"></script>
 
     <!-- vr -->
     <!-- for webvr
@@ -99,8 +98,8 @@
 
         // vr
         // for webvr
-		//var controls = new THREE.VRControls(camera);
-		//var effect = new THREE.VREffect(webGLRenderer);
+        //var controls = new THREE.VRControls(camera);
+        //var effect = new THREE.VREffect(webGLRenderer);
         //if (WEBVR.isAvailable() === true) {
         //    document.body.appendChild(WEBVR.getButton(effect));
         //}
@@ -128,7 +127,7 @@
                 requestFullScreen.bind(canvas)();
             }
             else {
-                removeSelectedDebri();
+                removeSelectedDebri(10.2, earth.position);
             }
         }.bind(this));
         window.addEventListener('resize', onWindowResize, false);
@@ -252,7 +251,7 @@
             return mesh;
         }
 
-        function removeSelectedDebri() {
+        function removeSelectedDebri(limitRadius, center) {
             if (selectedDebri) {
                 putDebriRandom(selectedDebri, limitRadius, center);
                 deselectDebri();

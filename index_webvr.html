@@ -8,7 +8,6 @@
 
     <script type="text/javascript" src="libs/stats.js"></script>
     <script type="text/javascript" src="libs/dat.gui.js"></script>
-    <script type="text/javascript" src="libs/OrbitControls.js"></script>
 
     <!-- vr -->
     <script type="text/javascript" src="libs/WebVR.js"></script>
@@ -99,8 +98,8 @@
 
         // vr
         // for webvr
-		var controls = new THREE.VRControls(camera);
-		var effect = new THREE.VREffect(webGLRenderer);
+        var controls = new THREE.VRControls(camera);
+        var effect = new THREE.VREffect(webGLRenderer);
         var clock = new THREE.Clock();
         if (WEBVR.isAvailable() === true) {
             document.body.appendChild(WEBVR.getButton(effect));
@@ -124,7 +123,7 @@
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
         webGLRenderer.domElement.addEventListener('click', function() {
-            removeSelectedDebri();
+            removeSelectedDebri(10.2, earth.position);
         }.bind(this));
         window.addEventListener('resize', onWindowResize, false);
         function onWindowResize() {
@@ -247,7 +246,7 @@
             return mesh;
         }
 
-        function removeSelectedDebri() {
+        function removeSelectedDebri(limitRadius, center) {
             if (selectedDebri) {
                 putDebriRandom(selectedDebri, limitRadius, center);
                 deselectDebri();
