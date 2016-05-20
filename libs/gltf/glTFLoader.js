@@ -983,8 +983,10 @@ THREE.glTFLoader.prototype.load = function( url, callback ) {
 
 				}
 				else {
-					var technique = material.technique ? 
-						this.resources.getEntry(material.technique) :
+					var technique = material.instanceTechnique ? 
+                        this.resources.getEntry(material.instanceTechnique.technique) :
+					//var technique = material.technique ? 
+						//this.resources.getEntry(material.technique) :
 						null;
 
 					values = material.values;
@@ -1039,7 +1041,7 @@ THREE.glTFLoader.prototype.load = function( url, callback ) {
 				
 				if (!(shininess === undefined))
 				{
-					params.shininess = shininess;
+					params.shininess = Math.max( shininess, 1e-4 );
 				}
 				
 				delete params.ambient;
